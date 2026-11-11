@@ -1,0 +1,725 @@
+{
+  "observed_at_utc": "2026-10-23T02:39:33.554783+00:00",
+  "certificates": [
+    {
+      "resource_id": "21137472",
+      "domain": "zhuhepay.com",
+      "domains": [
+        "www.zhuhepay.com",
+        "zhuhepay.com"
+      ],
+      "expires_at": "2026-10-24T23:59:59+00:00",
+      "remaining_days": 1.8891833937152778,
+      "selected": true
+    },
+    {
+      "resource_id": "21415310",
+      "domain": "app.lemanghuandian.com",
+      "domains": [
+        "app.lemanghuandian.com",
+        "www.app.lemanghuandian.com"
+      ],
+      "expires_at": "2026-11-09T23:59:59+00:00",
+      "remaining_days": 17.889183393715278,
+      "selected": true
+    },
+    {
+      "resource_id": "21477406",
+      "domain": "super.lemanghuandian.com",
+      "domains": [
+        "super.lemanghuandian.com",
+        "www.super.lemanghuandian.com"
+      ],
+      "expires_at": "2026-11-12T23:59:59+00:00",
+      "remaining_days": 20.889183393715278,
+      "selected": true
+    },
+    {
+      "resource_id": "21747353",
+      "domain": "cnt6lvu2.lemanghuandian.com",
+      "domains": [
+        "cnt6lvu2.lemanghuandian.com",
+        "www.cnt6lvu2.lemanghuandian.com"
+      ],
+      "expires_at": "2026-11-28T23:59:59+00:00",
+      "remaining_days": 36.88918339371528,
+      "selected": true
+    },
+    {
+      "resource_id": "21799378",
+      "domain": "image.lemanghuandian.com",
+      "domains": [
+        "image.lemanghuandian.com",
+        "www.image.lemanghuandian.com"
+      ],
+      "expires_at": "2026-12-01T23:59:59+00:00",
+      "remaining_days": 39.88918339371528,
+      "selected": true
+    },
+    {
+      "resource_id": "22563410",
+      "domain": "gatway.lemanghuandian.com",
+      "domains": [
+        "gatway.lemanghuandian.com",
+        "www.gatway.lemanghuandian.com"
+      ],
+      "expires_at": "2027-01-03T23:59:59+00:00",
+      "remaining_days": 72.88918339371529,
+      "selected": true
+    },
+    {
+      "resource_id": "22695803",
+      "domain": "mnp.lemanghuandian.com",
+      "domains": [
+        "mnp.lemanghuandian.com",
+        "www.mnp.lemanghuandian.com"
+      ],
+      "expires_at": "2027-01-11T23:59:59+00:00",
+      "remaining_days": 80.88918339371529,
+      "selected": true
+    },
+    {
+      "resource_id": "26795991",
+      "domain": "image-private.lemanghuandian.com",
+      "domains": [
+        "image-private.lemanghuandian.com",
+        "www.image-private.lemanghuandian.com"
+      ],
+      "expires_at": "2027-02-22T23:59:59+00:00",
+      "remaining_days": 122.88918339371529,
+      "selected": true
+    },
+    {
+      "resource_id": "26926493",
+      "domain": "link.lemanghuandian.com",
+      "domains": [
+        "link.lemanghuandian.com",
+        "www.link.lemanghuandian.com"
+      ],
+      "expires_at": "2027-03-01T23:59:59+00:00",
+      "remaining_days": 129.88918339371529,
+      "selected": true
+    },
+    {
+      "resource_id": "27123457",
+      "domain": "gateway.demonpower.cn",
+      "domains": [
+        "gateway.demonpower.cn",
+        "www.gateway.demonpower.cn"
+      ],
+      "expires_at": "2026-12-06T23:59:59+00:00",
+      "remaining_days": 44.88918339371528,
+      "selected": true
+    },
+    {
+      "resource_id": "27123959",
+      "domain": "jump.demonpower.cn",
+      "domains": [
+        "jump.demonpower.cn",
+        "www.jump.demonpower.cn"
+      ],
+      "expires_at": "2026-12-06T23:59:59+00:00",
+      "remaining_days": 44.88918339371528,
+      "selected": true
+    },
+    {
+      "resource_id": "27539307",
+      "domain": "lemanghuandian.com",
+      "domains": [
+        "lemanghuandian.com",
+        "www.lemanghuandian.com"
+      ],
+      "expires_at": "2026-12-27T23:59:59+00:00",
+      "remaining_days": 65.88918339371529,
+      "selected": true
+    },
+    {
+      "resource_id": "22139860",
+      "domain": "oss.demonpower.cn",
+      "domains": [
+        "oss.demonpower.cn",
+        "www.oss.demonpower.cn"
+      ],
+      "expires_at": "2026-12-14T23:59:59+00:00",
+      "remaining_days": 52.88918339371528,
+      "selected": true
+    },
+    {
+      "resource_id": "23081355",
+      "domain": "demonpower.cn",
+      "domains": [
+        "demonpower.cn",
+        "www.demonpower.cn"
+      ],
+      "expires_at": "2027-01-22T23:59:59+00:00",
+      "remaining_days": 91.88918339371529,
+      "selected": true
+    },
+    {
+      "resource_id": "25521126",
+      "domain": "*.mannengpao.com",
+      "domains": [
+        "*.mannengpao.com",
+        "mannengpao.com"
+      ],
+      "expires_at": "2026-12-25T23:59:59+00:00",
+      "remaining_days": 63.88918339371528,
+      "selected": true
+    },
+    {
+      "resource_id": "10345686",
+      "domain": "app.lemanghuandian.com",
+      "domains": [
+        "app.lemanghuandian.com"
+      ],
+      "expires_at": "2024-06-10T23:59:59+00:00",
+      "remaining_days": -864.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "10974256",
+      "domain": "cnt6lvu2.lemanghuandian.com",
+      "domains": [
+        "cnt6lvu2.lemanghuandian.com"
+      ],
+      "expires_at": "2024-08-28T23:59:59+00:00",
+      "remaining_days": -785.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "11509505",
+      "domain": "www.zhuhepay.com",
+      "domains": [
+        "www.zhuhepay.com",
+        "zhuhepay.com"
+      ],
+      "expires_at": "2024-11-07T23:59:59+00:00",
+      "remaining_days": -714.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "12810804",
+      "domain": "www.magichuandian.com",
+      "domains": [
+        "magichuandian.com",
+        "www.magichuandian.com"
+      ],
+      "expires_at": "2024-06-18T23:59:59+00:00",
+      "remaining_days": -856.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "12870352",
+      "domain": "image.lemanghuandian.com",
+      "domains": [
+        "image.lemanghuandian.com"
+      ],
+      "expires_at": "2024-06-26T23:59:59+00:00",
+      "remaining_days": -848.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "13115455",
+      "domain": "gatway.lemanghuandian.com",
+      "domains": [
+        "gatway.lemanghuandian.com"
+      ],
+      "expires_at": "2024-07-22T23:59:59+00:00",
+      "remaining_days": -822.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "13115493",
+      "domain": "zx-callback-dev.lemanghuandian.com",
+      "domains": [
+        "zx-callback-dev.lemanghuandian.com"
+      ],
+      "expires_at": "2024-07-22T23:59:59+00:00",
+      "remaining_days": -822.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "13115598",
+      "domain": "zx-wh-callback.lemanghuandian.com",
+      "domains": [
+        "zx-wh-callback.lemanghuandian.com"
+      ],
+      "expires_at": "2024-07-22T23:59:59+00:00",
+      "remaining_days": -822.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "13545631",
+      "domain": "app.lemanghuandian.com",
+      "domains": [
+        "app.lemanghuandian.com"
+      ],
+      "expires_at": "2024-08-31T23:59:59+00:00",
+      "remaining_days": -782.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "13629823",
+      "domain": "www.magichuandian.com",
+      "domains": [
+        "magichuandian.com",
+        "www.magichuandian.com"
+      ],
+      "expires_at": "2024-09-08T23:59:59+00:00",
+      "remaining_days": -774.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "13743651",
+      "domain": "image.lemanghuandian.com",
+      "domains": [
+        "image.lemanghuandian.com"
+      ],
+      "expires_at": "2024-09-17T23:59:59+00:00",
+      "remaining_days": -765.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "14131273",
+      "domain": "zx-wh-callback.lemanghuandian.com",
+      "domains": [
+        "zx-wh-callback.lemanghuandian.com"
+      ],
+      "expires_at": "2024-10-16T23:59:59+00:00",
+      "remaining_days": -736.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "14131312",
+      "domain": "gatway.lemanghuandian.com",
+      "domains": [
+        "gatway.lemanghuandian.com"
+      ],
+      "expires_at": "2024-10-16T23:59:59+00:00",
+      "remaining_days": -736.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "14734423",
+      "domain": "cnt6lvu2.lemanghuandian.com",
+      "domains": [
+        "cnt6lvu2.lemanghuandian.com"
+      ],
+      "expires_at": "2024-11-27T23:59:59+00:00",
+      "remaining_days": -694.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "14748286",
+      "domain": "app.lemanghuandian.com",
+      "domains": [
+        "app.lemanghuandian.com"
+      ],
+      "expires_at": "2024-11-26T23:59:59+00:00",
+      "remaining_days": -695.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "14947030",
+      "domain": "magichuandian.com",
+      "domains": [
+        "magichuandian.com",
+        "www.magichuandian.com"
+      ],
+      "expires_at": "2024-12-09T23:59:59+00:00",
+      "remaining_days": -682.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "15024773",
+      "domain": "image.lemanghuandian.com",
+      "domains": [
+        "image.lemanghuandian.com"
+      ],
+      "expires_at": "2024-12-15T23:59:59+00:00",
+      "remaining_days": -676.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "15319070",
+      "domain": "gatway.lemanghuandian.com",
+      "domains": [
+        "gatway.lemanghuandian.com"
+      ],
+      "expires_at": "2025-01-07T23:59:59+00:00",
+      "remaining_days": -653.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "15319108",
+      "domain": "zx-wh-callback.lemanghuandian.com",
+      "domains": [
+        "zx-wh-callback.lemanghuandian.com"
+      ],
+      "expires_at": "2025-01-07T23:59:59+00:00",
+      "remaining_days": -653.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "15513293",
+      "domain": "gateway.demonpower.cn",
+      "domains": [
+        "gateway.demonpower.cn"
+      ],
+      "expires_at": "2025-10-23T23:59:59+00:00",
+      "remaining_days": -364.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "15513345",
+      "domain": "ddc.demonpower.cn",
+      "domains": [
+        "ddc.demonpower.cn"
+      ],
+      "expires_at": "2025-10-23T23:59:59+00:00",
+      "remaining_days": -364.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "15678051",
+      "domain": "www.demonpower.cn",
+      "domains": [
+        "demonpower.cn",
+        "www.demonpower.cn"
+      ],
+      "expires_at": "2025-02-01T23:59:59+00:00",
+      "remaining_days": -628.1108166062847,
+      "selected": false
+    },
+    {
+      "resource_id": "15747369",
+      "domain": "zhuhepay.com",
+      "domains": [
+        "www.zhuhepay.com",
+        "zhuhepay.com"
+      ],
+      "expires_at": "2025-11-08T23:59:59+00:00",
+      "remaining_days": -348.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "15941553",
+      "domain": "app.lemanghuandian.com",
+      "domains": [
+        "app.lemanghuandian.com"
+      ],
+      "expires_at": "2025-11-19T23:59:59+00:00",
+      "remaining_days": -337.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "16085775",
+      "domain": "cnt6lvu2.lemanghuandian.com",
+      "domains": [
+        "cnt6lvu2.lemanghuandian.com"
+      ],
+      "expires_at": "2025-11-28T23:59:59+00:00",
+      "remaining_days": -328.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "16240036",
+      "domain": "image.lemanghuandian.com",
+      "domains": [
+        "image.lemanghuandian.com"
+      ],
+      "expires_at": "2025-12-08T23:59:59+00:00",
+      "remaining_days": -318.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "16351343",
+      "domain": "oss.demonpower.cn",
+      "domains": [
+        "oss.demonpower.cn"
+      ],
+      "expires_at": "2025-12-16T23:59:59+00:00",
+      "remaining_days": -310.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "16727945",
+      "domain": "gatway.lemanghuandian.com",
+      "domains": [
+        "gatway.lemanghuandian.com"
+      ],
+      "expires_at": "2026-01-06T23:59:59+00:00",
+      "remaining_days": -289.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "16727958",
+      "domain": "zx-wh-callback.lemanghuandian.com",
+      "domains": [
+        "zx-wh-callback.lemanghuandian.com"
+      ],
+      "expires_at": "2026-01-06T23:59:59+00:00",
+      "remaining_days": -289.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "17068182",
+      "domain": "www.demonpower.cn",
+      "domains": [
+        "demonpower.cn",
+        "www.demonpower.cn"
+      ],
+      "expires_at": "2026-01-31T23:59:59+00:00",
+      "remaining_days": -264.11081660628474,
+      "selected": false
+    },
+    {
+      "resource_id": "20134946",
+      "domain": "image-private.lemanghuandian.com",
+      "domains": [
+        "image-private.lemanghuandian.com",
+        "www.image-private.lemanghuandian.com"
+      ],
+      "expires_at": "2026-08-26T23:59:59+00:00",
+      "remaining_days": -57.11081660628472,
+      "selected": false
+    },
+    {
+      "resource_id": "20314961",
+      "domain": "jump.demonpower.cn",
+      "domains": [
+        "jump.demonpower.cn",
+        "www.jump.demonpower.cn"
+      ],
+      "expires_at": "2026-09-07T23:59:59+00:00",
+      "remaining_days": -45.11081660628472,
+      "selected": false
+    },
+    {
+      "resource_id": "20662430",
+      "domain": "jhzf.demonpower.cn",
+      "domains": [
+        "jhzf.demonpower.cn",
+        "www.jhzf.demonpower.cn"
+      ],
+      "expires_at": "2026-09-27T23:59:59+00:00",
+      "remaining_days": -25.110816606284725,
+      "selected": false
+    },
+    {
+      "resource_id": "20892508",
+      "domain": "gateway.demonpower.cn",
+      "domains": [
+        "gateway.demonpower.cn",
+        "www.gateway.demonpower.cn"
+      ],
+      "expires_at": "2026-10-10T23:59:59+00:00",
+      "remaining_days": -12.110816606284722,
+      "selected": false
+    },
+    {
+      "resource_id": "23954720",
+      "domain": "link.lemanghuandian.com",
+      "domains": [
+        "link.lemanghuandian.com",
+        "www.link.lemanghuandian.com"
+      ],
+      "expires_at": "2026-09-14T23:59:59+00:00",
+      "remaining_days": -38.11081660628472,
+      "selected": false
+    },
+    {
+      "resource_id": "24026316",
+      "domain": "dev-qg.lemanghuandian.com",
+      "domains": [
+        "dev-qg.lemanghuandian.com",
+        "www.dev-qg.lemanghuandian.com"
+      ],
+      "expires_at": "2026-06-17T23:59:59+00:00",
+      "remaining_days": -127.11081660628471,
+      "selected": false
+    },
+    {
+      "resource_id": "24026331",
+      "domain": "dev-cs.lemanghuandian.com",
+      "domains": [
+        "dev-cs.lemanghuandian.com",
+        "www.dev-cs.lemanghuandian.com"
+      ],
+      "expires_at": "2026-06-17T23:59:59+00:00",
+      "remaining_days": -127.11081660628471,
+      "selected": false
+    },
+    {
+      "resource_id": "24026352",
+      "domain": "dev-wh.lemanghuandian.com",
+      "domains": [
+        "dev-wh.lemanghuandian.com",
+        "www.dev-wh.lemanghuandian.com"
+      ],
+      "expires_at": "2026-06-17T23:59:59+00:00",
+      "remaining_days": -127.11081660628471,
+      "selected": false
+    },
+    {
+      "resource_id": "24600635",
+      "domain": "zx-callback-dev.lemanghuandian.com",
+      "domains": [
+        "www.zx-callback-dev.lemanghuandian.com",
+        "zx-callback-dev.lemanghuandian.com"
+      ],
+      "expires_at": "2026-07-21T23:59:59+00:00",
+      "remaining_days": -93.11081660628471,
+      "selected": false
+    },
+    {
+      "resource_id": "25377957",
+      "domain": "www.lemanghuandian.com",
+      "domains": [
+        "lemanghuandian.com",
+        "www.lemanghuandian.com"
+      ],
+      "expires_at": "2026-08-31T23:59:59+00:00",
+      "remaining_days": -52.11081660628472,
+      "selected": false
+    }
+  ],
+  "account": "aliyun-yuanzhu",
+  "job_id": "aliyun-yuanzhu-certificates",
+  "policy_before": {
+    "default_enabled": true,
+    "resources": []
+  },
+  "policy_after": {
+    "default_enabled": false,
+    "resources": [
+      {
+        "resource_id": "21137472",
+        "enabled": true
+      },
+      {
+        "resource_id": "21415310",
+        "enabled": true
+      },
+      {
+        "resource_id": "21477406",
+        "enabled": true
+      },
+      {
+        "resource_id": "21747353",
+        "enabled": true
+      },
+      {
+        "resource_id": "21799378",
+        "enabled": true
+      },
+      {
+        "resource_id": "27123457",
+        "enabled": true
+      },
+      {
+        "resource_id": "27123959",
+        "enabled": true
+      },
+      {
+        "resource_id": "22139860",
+        "enabled": true
+      },
+      {
+        "resource_id": "25521126",
+        "enabled": true
+      },
+      {
+        "resource_id": "27539307",
+        "enabled": true
+      },
+      {
+        "resource_id": "22563410",
+        "enabled": true
+      },
+      {
+        "resource_id": "22695803",
+        "enabled": true
+      },
+      {
+        "resource_id": "23081355",
+        "enabled": true
+      },
+      {
+        "resource_id": "26795991",
+        "enabled": true
+      },
+      {
+        "resource_id": "26926493",
+        "enabled": true
+      }
+    ]
+  },
+  "selected_count": 15,
+  "expired_excluded_count": 40,
+  "config_sha256_before": "2b7dd6d414d761d3b84006d92bcdafbe0787bc3e18b03a737d30462870fc36e8",
+  "config_sha256_after": "82c5ccd4613e9e37427ea47168126faca119c3f20c1793803a758bed4ce8b2eb",
+  "only_target_alerting_changed": true,
+  "deployment_after": {
+    "cloud-resource-monitor-cloud-monitor-1": {
+      "container_id": "cf306f911f945f308f7e158367aa6c3cc9e1cecffa01157c4fae7e058f4517a3",
+      "started_at": "2026-10-23T02:42:41.74135245Z",
+      "running": true,
+      "health": "healthy"
+    },
+    "cloud-resource-monitor-notification-gateway-1": {
+      "container_id": "3800839aacbdd29b0f4b439da6e841fe0523945a6b75afdf222252ecca344b5a",
+      "started_at": "2026-10-23T02:15:19.657749083Z",
+      "running": true,
+      "health": "healthy"
+    },
+    "cloud-resource-monitor-mysql-1": {
+      "container_id": "1c500ef0f1b7096da38adab35053116dfb2027ae2724d713a6d8a9d3fb4b9033",
+      "started_at": "2026-09-18T01:49:23.349554432Z",
+      "running": true,
+      "health": "healthy"
+    }
+  },
+  "verification": {
+    "server_offline_config_check": true,
+    "local_offline_config_check": true,
+    "offline_resource_alert_tests_passed": 66,
+    "all_55_certificate_selections_match": true,
+    "unknown_certificate_alerting_disabled": true,
+    "collection_failure_alerting_retained": true,
+    "runtime": {
+      "ok": true,
+      "offline_scope_match": true,
+      "health": {
+        "status": "ok"
+      },
+      "job": {
+        "id": "aliyun-yuanzhu-certificates",
+        "status": "ok",
+        "updated_at": 1792723376.597078,
+        "sample_count": 55
+      },
+      "latest_certificate_count": 55,
+      "active_certificate_alerts": [
+        {
+          "resource_id": "21477406",
+          "domain": "super.lemanghuandian.com",
+          "severity": "P1"
+        },
+        {
+          "resource_id": "21415310",
+          "domain": "app.lemanghuandian.com",
+          "severity": "P1"
+        },
+        {
+          "resource_id": "21137472",
+          "domain": "zhuhepay.com",
+          "severity": "P0"
+        }
+      ],
+      "excluded_active_alerts": 0,
+      "excluded_pending_or_failed_notifications": 0
+    }
+  },
+  "verified_at_utc": "2026-10-23T02:46:05.399542+00:00"
+}

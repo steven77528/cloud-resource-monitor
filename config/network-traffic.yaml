@@ -1,0 +1,170 @@
+# 网络速率采集：沿用主配置账号和地域，不连接业务数据库。
+# ECS 可用 options.instances 限定实例；[] 表示暂不采集，入站/出站共用清单。
+# 华为 ECS 省略 instances，按配置地域自动发现；阿里云保留各自清单，RDS 保持自动发现。
+# 按所属账号填写实例 ID、地域和可选名称，见 docs/network-traffic.md。
+# 绝对速率初始阈值不是厂商带宽配额；P0/P1/P2 和持续时间见文件末尾与文档。
+jobs:
+  - id: aliyun-ecs-network
+    account: aliyun-hycen
+    kind: network_traffic
+    enabled: true
+    interval_seconds: 60
+    max_age_seconds: 300
+    rules: [aliyun-ecs-network-in, aliyun-ecs-network-out]
+    options:
+      product: ecs
+      instances: []
+      # 填写时用以下列表替换 []，不要新增第二个 instances 字段：
+      # instances:
+      #   - resource_id: i-your-instance
+      #     resource_name: 应用服务器
+      #     region: cn-hangzhou
+      period: 60
+      inventory_cache_seconds: 300
+      max_age_seconds: 300
+
+  - id: aliyun-rds-network
+    account: aliyun-hycen
+    kind: network_traffic
+    enabled: true
+    interval_seconds: 60
+    max_age_seconds: 300
+    rules: [aliyun-rds-network-in, aliyun-rds-network-out]
+    options:
+      product: rds
+      period: 60
+      engines: [MySQL]
+      inventory_cache_seconds: 300
+      max_age_seconds: 300
+
+  - id: aliyun-yuanzhu-ecs-network
+    account: aliyun-yuanzhu
+    kind: network_traffic
+    # 账号本身仍按主配置的原有开关控制，不会自动启用账号。
+    enabled: true
+    interval_seconds: 60
+    max_age_seconds: 300
+    rules: [aliyun-ecs-network-in, aliyun-ecs-network-out]
+    options:
+      product: ecs
+      instances: []
+      # 同上，填写此账号需要采集的 ECS；未填写时不采集。
+      period: 60
+      inventory_cache_seconds: 300
+      max_age_seconds: 300
+
+  - id: aliyun-yuanzhu-rds-network
+    account: aliyun-yuanzhu
+    kind: network_traffic
+    enabled: true
+    interval_seconds: 60
+    max_age_seconds: 300
+    rules: [aliyun-rds-network-in, aliyun-rds-network-out]
+    options:
+      product: rds
+      period: 60
+      engines: [MySQL]
+      inventory_cache_seconds: 300
+      max_age_seconds: 300
+
+  - id: huawei-ecs-network
+    account: huawei-hycen
+    kind: network_traffic
+    enabled: true
+    # 同一闭合 5 分钟窗口内，总网卡减已关联 EIP 公网，输出内网估算。
+    interval_seconds: 300
+    collection_error_samples: 2
+    max_age_seconds: 900
+    rules: [huawei-ecs-network-in, huawei-ecs-network-out]
+    options:
+      product: ecs
+      scope: intranet_estimated
+      # 省略 instances，恢复按账号/任务地域自动发现华为 ECS。
+      # 需要限定范围时再填写控制台 ECS ID（UUID）、region 和可选 resource_name。
+      # 无完整 EIP 关联或数据异常时不输出估算值。
+      period: 300
+      inventory_cache_seconds: 300
+      max_age_seconds: 900
+
+  - id: huawei-rds-network
+    account: huawei-hycen
+    kind: network_traffic
+    enabled: true
+    interval_seconds: 300
+    max_age_seconds: 900
+    rules: [huawei-rds-network-in, huawei-rds-network-out]
+    options:
+      product: rds
+      scope: intranet_estimated
+      period: 300
+      engines: [MySQL, PostgreSQL]
+      inventory_cache_seconds: 300
+      # 与 EIP 按同一 5 分钟窗口对齐，监控可延迟 5-10 分钟。
+      lookback_seconds: 1800
+      max_age_seconds: 900
+
+rules:
+  - id: aliyun-ecs-network-in
+    metric: network_in_bps
+    match: {provider: aliyun, product: ecs, scope: intranet}
+    summary: ECS 内网入站速率持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 800000000, for_seconds: 300}
+      - {severity: P1, op: ge, threshold: 300000000, for_seconds: 600}
+      - {severity: P2, op: ge, threshold: 100000000, for_seconds: 900}
+  - id: aliyun-ecs-network-out
+    metric: network_out_bps
+    match: {provider: aliyun, product: ecs, scope: intranet}
+    summary: ECS 内网出站速率持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 800000000, for_seconds: 300}
+      - {severity: P1, op: ge, threshold: 300000000, for_seconds: 600}
+      - {severity: P2, op: ge, threshold: 100000000, for_seconds: 900}
+  - id: aliyun-rds-network-in
+    metric: network_in_bps
+    match: {provider: aliyun, product: rds, scope: all}
+    summary: RDS 总网络输入速率持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 200000000, for_seconds: 300}
+      - {severity: P1, op: ge, threshold: 100000000, for_seconds: 600}
+      - {severity: P2, op: ge, threshold: 50000000, for_seconds: 900}
+  - id: aliyun-rds-network-out
+    metric: network_out_bps
+    match: {provider: aliyun, product: rds, scope: all}
+    summary: RDS 总网络输出速率持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 200000000, for_seconds: 300}
+      - {severity: P1, op: ge, threshold: 100000000, for_seconds: 600}
+      - {severity: P2, op: ge, threshold: 50000000, for_seconds: 900}
+  - id: huawei-ecs-network-in
+    metric: network_in_bps
+    match: {provider: huawei, product: ecs, scope: intranet_estimated}
+    summary: ECS 内网入站速率（估算）持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 800000000, for_seconds: 600}
+      - {severity: P1, op: ge, threshold: 300000000, for_seconds: 900}
+      - {severity: P2, op: ge, threshold: 100000000, for_seconds: 1800}
+  - id: huawei-ecs-network-out
+    metric: network_out_bps
+    match: {provider: huawei, product: ecs, scope: intranet_estimated}
+    summary: ECS 内网出站速率（估算）持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 800000000, for_seconds: 600}
+      - {severity: P1, op: ge, threshold: 300000000, for_seconds: 900}
+      - {severity: P2, op: ge, threshold: 100000000, for_seconds: 1800}
+  - id: huawei-rds-network-in
+    metric: network_in_bps
+    match: {provider: huawei, product: rds, scope: intranet_estimated}
+    summary: RDS 内网入站速率（估算）持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 200000000, for_seconds: 300}
+      - {severity: P1, op: ge, threshold: 100000000, for_seconds: 600}
+      - {severity: P2, op: ge, threshold: 50000000, for_seconds: 900}
+  - id: huawei-rds-network-out
+    metric: network_out_bps
+    match: {provider: huawei, product: rds, scope: intranet_estimated}
+    summary: RDS 内网出站速率（估算）持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 200000000, for_seconds: 300}
+      - {severity: P1, op: ge, threshold: 100000000, for_seconds: 600}
+      - {severity: P2, op: ge, threshold: 50000000, for_seconds: 900}

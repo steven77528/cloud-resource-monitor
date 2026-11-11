@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-11",
+  "scope": "credentials and credential copies",
+  "sanitized_fields": [
+    {
+      "file": "config/config.yaml",
+      "field": "accounts.0.access_key_id"
+    },
+    {
+      "file": "config/config.yaml",
+      "field": "accounts.0.access_key_secret"
+    },
+    {
+      "file": "config/config.yaml",
+      "field": "accounts.2.access_key_id"
+    },
+    {
+      "file": "config/config.yaml",
+      "field": "accounts.2.access_key_secret"
+    },
+    {
+      "file": "config/config.yaml",
+      "field": "accounts.2.project_ids.cn-east-3"
+    },
+    {
+      "file": "config/integrations/asign.yaml",
+      "field": "accounts.0.app_id"
+    },
+    {
+      "file": "config/integrations/huifu.yaml",
+      "field": "accounts.0.huifu_id"
+    },
+    {
+      "file": "config/integrations/wechat.yaml",
+      "field": "accounts.0.appid"
+    },
+    {
+      "file": "config/notifications/notifications.yaml",
+      "field": "notifications.dingtalk.webhook"
+    },
+    {
+      "file": "config/notifications/notifications.yaml",
+      "field": "notifications.dingtalk.secret"
+    },
+    {
+      "file": "config/notifications/notifications.yaml",
+      "field": "notifications.email.username"
+    },
+    {
+      "file": "config/notifications/notifications.yaml",
+      "field": "notifications.email.password"
+    },
+    {
+      "file": "config/notifications/notifications.yaml",
+      "field": "notifications.email.from_address"
+    },
+    {
+      "file": "config/notifications/notifications.yaml",
+      "field": "notifications.email.to.0"
+    },
+    {
+      "file": ".env",
+      "field": "MYSQL_USER"
+    },
+    {
+      "file": ".env",
+      "field": "MYSQL_PASSWORD"
+    },
+    {
+      "file": ".env",
+      "field": "MYSQL_ROOT_PASSWORD"
+    },
+    {
+      "file": ".env",
+      "field": "NOTIFICATION_GATEWAY_TOKEN"
+    }
+  ],
+  "sanitized_copies": [
+    {
+      "file": "docs/asign-api.md",
+      "occurrences": 1
+    }
+  ],
+  "configuration_structure_verified": true,
+  "account_job_channel_enablement_preserved": true,
+  "original_unique_sensitive_values_absent_from_package_files": true,
+  "generic_credentials_cleared_in_credential_fields_only": true,
+  "environment_variable_references_preserved": true,
+  "excluded_directories": [
+    "*.egg-info",
+    ".deploy-backups",
+    ".git",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".venv",
+    "__pycache__",
+    "data",
+    "node_modules"
+  ],
+  "excluded_files": [
+    "*.zip",
+    "*.pyc",
+    "*.pyo",
+    "symbolic links"
+  ],
+  "git_history_rewritten": false
+}

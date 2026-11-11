@@ -1,0 +1,66 @@
+{
+  "window_beijing": {
+    "from": "2026-10-29T15:20:00+08:00",
+    "to": "2026-10-30T15:19:59+08:00"
+  },
+  "huawei_rds": {
+    "resources": 3,
+    "engine": "MySQL",
+    "topology": "Ha",
+    "associated_eips_per_resource": 1,
+    "native_rds_unit": "byte/s",
+    "native_eip_unit": "bit/s",
+    "native_points_per_series": 1440,
+    "native_points_per_300_second_bucket": 5,
+    "native_period1_equals_period60": true,
+    "compared_directional_buckets": 1728,
+    "negative_directional_buckets": 0,
+    "missing_common_buckets": 0,
+    "minimum_difference_bps": {
+      "rds-yj-pms": {"in": 2595069.73, "out": 79434980.32},
+      "rds-PMS": {"in": 14064157.71, "out": 288030567.92},
+      "rds-IOT": {"in": 141408.24, "out": 350914.16}
+    },
+    "network_collection_error_notifications_7d": 0,
+    "mapping_caveat": "Current unique address mappings; historical binding continuity not independently established"
+  },
+  "aliyun": {
+    "enabled_selected_ecs": 3,
+    "rds": 7,
+    "live_network_samples": 20,
+    "live_partial_failures": 0,
+    "source_unit": "bit/s",
+    "source_multiplier": 1,
+    "negative_points": 0,
+    "invalid_points": 0,
+    "conflicting_points": 0,
+    "latest_direction_timestamp_difference_seconds": 0,
+    "ecs_scope": "intranet",
+    "rds_scope": "all",
+    "eip_subtraction": false,
+    "ecs_internal_missing_minutes_per_direction": [6, 5, 52],
+    "ecs_maximum_gaps_seconds": [180, 120, 180],
+    "live_source_age_seconds": {
+      "ecs": [5.605],
+      "rds": [125.605, 185.605]
+    },
+    "network_collection_error_notifications_7d": {
+      "aliyun-rds-network": {"firing": 2, "recovery": 2},
+      "aliyun-yuanzhu-ecs-network": {"firing": 7, "recovery": 7},
+      "aliyun-yuanzhu-rds-network": {"firing": 4, "recovery": 4}
+    },
+    "last_failure_beijing": "2026-10-29T13:04:54+08:00",
+    "last_recovery_beijing": "2026-10-29T13:06:54+08:00",
+    "historical_failure_cause": "No per-event SDK details retained; cannot attribute to timeout, stale data or transport reset",
+    "empty_ecs_selection": "aliyun-ecs-network has explicit zero instances and expected no_data"
+  },
+  "operations": {
+    "database": "monitor database, read-only transaction rolled back",
+    "business_database_connected": false,
+    "scheduler_started": false,
+    "services_restarted": false,
+    "configuration_changed": false,
+    "runtime_algorithm_changed": false,
+    "test_notifications_sent": false
+  }
+}

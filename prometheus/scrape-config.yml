@@ -1,0 +1,17 @@
+# Merge this job into the existing Prometheus scrape_configs list.
+# Deliberately inherit global.scrape_interval and global.scrape_timeout.
+# Retention belongs in the Prometheus startup arguments:
+# --storage.tsdb.retention.time=200h
+scrape_configs:
+  - job_name: cloud-resource-monitor
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets: ['127.0.0.1:18080']
+    # Same Docker network: replace target with cloud-monitor:8080.
+    # Remote host: use the restricted proxy endpoint from nginx-metrics.conf.
+    # Optional auth must match api.metrics.token on cloud-monitor.
+    # Mount this file inside the Prometheus container if Prometheus uses Docker.
+    # authorization:
+    #   type: Bearer
+    #   credentials_file: /etc/prometheus/secrets/cloud-monitor-token

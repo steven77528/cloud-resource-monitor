@@ -1,0 +1,11 @@
+{
+  "Version": "1.1",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "vpc:publicIps:list"
+      ]
+    }
+  ]
+}

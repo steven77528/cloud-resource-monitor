@@ -1,0 +1,107 @@
+services:
+  cloud-monitor:
+    build:
+      context: .
+    image: cloud-resource-monitor:1.0.0
+    restart: unless-stopped
+    init: true
+    command: ["--config", "/app/config/config.yaml", "serve"]
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-cloud_monitor}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      NOTIFICATION_GATEWAY_TOKEN: ${NOTIFICATION_GATEWAY_TOKEN}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./config/config.yaml:/app/config/config.yaml:ro
+      - ./config/rds-performance.yaml:/app/config/rds-performance.yaml:ro
+      - ./config/network-traffic.yaml:/app/config/network-traffic.yaml:ro
+      - ./config/integrations:/app/config/integrations:ro
+      - ./config/relay:/app/config/relay:ro
+    ports:
+      - "18080:8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    stop_grace_period: 120s
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-cloud_monitor}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$$MYSQL_PASSWORD mysql --protocol=TCP -h 127.0.0.1 -u$$MYSQL_USER -D $$MYSQL_DATABASE -e 'SELECT 1' >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+    stop_grace_period: 60s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  notification-gateway:
+    build:
+      context: .
+    image: cloud-resource-monitor:1.0.0
+    entrypoint: ["python", "-m", "cloud_monitor.notification_gateway"]
+    command: ["--config", "/app/config/notifications.yaml", "serve"]
+    restart: unless-stopped
+    init: true
+    environment:
+      TZ: Asia/Shanghai
+      NOTIFICATION_GATEWAY_TOKEN: ${NOTIFICATION_GATEWAY_TOKEN}
+    volumes:
+      - ./config/notifications:/app/config:ro
+    ports:
+      - "18081:8081"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/healthz', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    stop_grace_period: 60s
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  mysql-data:

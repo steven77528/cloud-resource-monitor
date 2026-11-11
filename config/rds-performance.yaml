@@ -1,0 +1,312 @@
+# RDS 性能监控补充配置；有效期继续使用主配置中的任务。
+# 2026-09-10 两台 MySQL 的原生 API 权限和核心指标已实测通过；启用步骤见 docs/rds-performance.md。
+# 仅使用阿里云 AccessKey；无需填写业务数据库连接地址、用户名或密码。
+# PG 按已确认的新规则监控死锁速率和超过 5 秒的 SQL；MySQL 死锁小时计数暂不采集。
+jobs:
+  - id: aliyun-mysql-civil-performance
+    account: aliyun-hycen
+    kind: rds_performance
+    enabled: true
+    interval_seconds: 60
+    collection_error_samples: 2
+    max_age_seconds: 300
+    rules: [db-cpu, db-memory, db-disk, db-connections, db-replication, db-row-lock-waits]
+    options:
+      metadata_cache_seconds: 86400
+      lookback_seconds: 900
+      max_age_seconds: 300
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rm-bp189s4nn2ap51kqz
+          resource_name: 民用数据库
+          engine: MySQL
+          region: cn-hangzhou
+          # 已核实为高可用主实例，主备延迟合并在同一次性能请求中。
+          replication_role: primary
+          row_lock_waits: true
+
+  - id: aliyun-mysql-iot-performance
+    account: aliyun-hycen
+    kind: rds_performance
+    enabled: true
+    interval_seconds: 60
+    collection_error_samples: 2
+    max_age_seconds: 300
+    rules: [db-cpu, db-memory, db-disk, db-connections, db-replication, db-row-lock-waits]
+    options:
+      metadata_cache_seconds: 86400
+      lookback_seconds: 900
+      max_age_seconds: 300
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rm-bp1q304n528krlf84
+          resource_name: iot-kernel-mysql
+          engine: MySQL
+          region: cn-hangzhou
+          # 已核实为基础版实例，不配置主备延迟指标。
+          row_lock_waits: true
+
+  - id: aliyun-yuanzhu-mysql-changsha-readonly-performance
+    account: aliyun-yuanzhu
+    kind: rds_performance
+    enabled: true
+    interval_seconds: 60
+    collection_error_samples: 2
+    max_age_seconds: 300
+    rules: [db-cpu, db-memory, db-disk, db-connections, db-row-lock-waits]
+    options:
+      metadata_cache_seconds: 86400
+      lookback_seconds: 900
+      max_age_seconds: 300
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rr-bp10kz0b0s7f86t3y
+          resource_name: 长沙乐芒只读
+          engine: MySQL
+          region: cn-hangzhou
+          row_lock_waits: true
+
+  - id: aliyun-yuanzhu-mysql-national-readonly-performance
+    account: aliyun-yuanzhu
+    kind: rds_performance
+    enabled: true
+    interval_seconds: 60
+    collection_error_samples: 2
+    max_age_seconds: 300
+    rules: [db-cpu, db-memory, db-disk, db-connections, db-row-lock-waits]
+    options:
+      metadata_cache_seconds: 86400
+      lookback_seconds: 900
+      max_age_seconds: 300
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rr-bp1396zk752h1z0t1
+          resource_name: 乐芒全国只读
+          engine: MySQL
+          region: cn-hangzhou
+          row_lock_waits: true
+
+  - id: aliyun-yuanzhu-mysql-modian-performance
+    account: aliyun-yuanzhu
+    kind: rds_performance
+    enabled: true
+    interval_seconds: 60
+    collection_error_samples: 2
+    max_age_seconds: 300
+    rules: [db-cpu, db-memory, db-disk, db-connections, db-replication, db-row-lock-waits]
+    options:
+      metadata_cache_seconds: 86400
+      lookback_seconds: 900
+      max_age_seconds: 300
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rm-bp13k3392yhx84kg7
+          resource_name: 魔电生产数据库
+          engine: MySQL
+          region: cn-hangzhou
+          replication_role: primary
+          row_lock_waits: true
+
+  - id: aliyun-yuanzhu-mysql-wuhan-performance
+    account: aliyun-yuanzhu
+    kind: rds_performance
+    enabled: true
+    interval_seconds: 60
+    collection_error_samples: 2
+    max_age_seconds: 300
+    rules: [db-cpu, db-memory, db-disk, db-connections, db-replication, db-row-lock-waits]
+    options:
+      metadata_cache_seconds: 86400
+      lookback_seconds: 900
+      max_age_seconds: 300
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rm-bp120320qjpva90ck
+          resource_name: 武汉乐芒数据库
+          engine: MySQL
+          region: cn-hangzhou
+          replication_role: primary
+          row_lock_waits: true
+
+  - id: aliyun-yuanzhu-mysql-changsha-performance
+    account: aliyun-yuanzhu
+    kind: rds_performance
+    enabled: true
+    interval_seconds: 60
+    max_age_seconds: 300
+    rules: [db-cpu, db-memory, db-disk, db-connections, db-replication, db-row-lock-waits]
+    options:
+      metadata_cache_seconds: 86400
+      lookback_seconds: 900
+      max_age_seconds: 300
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rm-bp1b4y2vx0inl80i7
+          resource_name: 长沙乐芒数据库
+          engine: MySQL
+          region: cn-hangzhou
+          replication_role: primary
+          row_lock_waits: true
+
+  - id: aliyun-postgresql-performance
+    # PostgreSQL 在另一个阿里云账号；改为主配置 accounts 中对应的账号 ID。
+    account: aliyun-yuanzhu
+    kind: rds_performance
+    enabled: false
+    interval_seconds: 60
+    max_age_seconds: 300
+    rules: [db-cpu, db-memory, db-disk, db-connections, db-deadlock-rate, db-long-queries]
+    options:
+      metadata_cache_seconds: 86400
+      lookback_seconds: 900
+      max_age_seconds: 300
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: ""
+          resource_name: ""
+          engine: PostgreSQL
+          region: cn-hangzhou
+          deadlock_rate: true
+          long_query_seconds: 5
+
+  - id: aliyun-mysql-cloudmonitor
+    account: aliyun-hycen
+    kind: rds_cloudmonitor
+    enabled: true
+    interval_seconds: 60
+    collection_error_samples: 2
+    max_age_seconds: 300
+    rules: [db-slow-queries]
+    options:
+      # 同一地域的两台 MySQL 慢查询指标合并为一次云监控请求。
+      period: 60
+      lookback_seconds: 900
+      max_age_seconds: 300
+      metadata_cache_seconds: 86400
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rm-bp189s4nn2ap51kqz
+          resource_name: 民用数据库
+          engine: MySQL
+          region: cn-hangzhou
+        - resource_id: rm-bp1q304n528krlf84
+          resource_name: iot-kernel-mysql
+          engine: MySQL
+          region: cn-hangzhou
+
+  - id: aliyun-yuanzhu-mysql-cloudmonitor
+    account: aliyun-yuanzhu
+    kind: rds_cloudmonitor
+    enabled: true
+    interval_seconds: 60
+    collection_error_samples: 2
+    max_age_seconds: 300
+    rules: [db-slow-queries]
+    options:
+      # 同账号、同地域的五台 MySQL 慢查询指标合并为一次云监控请求。
+      period: 60
+      lookback_seconds: 900
+      max_age_seconds: 300
+      metadata_cache_seconds: 86400
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: rr-bp10kz0b0s7f86t3y
+          resource_name: 长沙乐芒只读
+          engine: MySQL
+          region: cn-hangzhou
+        - resource_id: rr-bp1396zk752h1z0t1
+          resource_name: 乐芒全国只读
+          engine: MySQL
+          region: cn-hangzhou
+        - resource_id: rm-bp13k3392yhx84kg7
+          resource_name: 魔电生产数据库
+          engine: MySQL
+          region: cn-hangzhou
+        - resource_id: rm-bp120320qjpva90ck
+          resource_name: 武汉乐芒数据库
+          engine: MySQL
+          region: cn-hangzhou
+        - resource_id: rm-bp1b4y2vx0inl80i7
+          resource_name: 长沙乐芒数据库
+          engine: MySQL
+          region: cn-hangzhou
+
+  - id: aliyun-postgresql-cloudmonitor
+    # 与上方 PostgreSQL 性能任务填写相同的实际账号、地域和实例信息。
+    account: aliyun-yuanzhu
+    kind: rds_cloudmonitor
+    enabled: false
+    interval_seconds: 60
+    max_age_seconds: 300
+    rules: [db-cache]
+    options:
+      period: 60
+      lookback_seconds: 900
+      max_age_seconds: 300
+      metadata_cache_seconds: 86400
+      sample_max_gap_seconds: 90
+      instances:
+        - resource_id: ""
+          resource_name: ""
+          engine: PostgreSQL
+          region: cn-hangzhou
+
+rules:
+  - id: db-cpu
+    metric: db_cpu_percent
+    summary: 数据库 CPU 使用率持续偏高
+    levels:
+      - {severity: P1, op: ge, threshold: 80, for_seconds: 300}
+  - id: db-memory
+    metric: db_memory_percent
+    summary: 数据库内存使用率持续偏高
+    levels:
+      - {severity: P1, op: ge, threshold: 85, for_seconds: 300}
+  - id: db-disk
+    metric: db_disk_used_percent
+    summary: 数据库磁盘空间使用率持续偏高
+    levels:
+      - {severity: P0, op: ge, threshold: 90, for_seconds: 300}
+      - {severity: P1, op: ge, threshold: 80, for_seconds: 600}
+  - id: db-connections
+    metric: db_connections_used_percent
+    summary: 数据库连接数使用率持续偏高
+    levels:
+      - {severity: P1, op: ge, threshold: 80, for_seconds: 300}
+  - id: db-replication
+    metric: db_replication_delay_seconds
+    summary: 数据库复制延迟超过 3 秒
+    levels:
+      - {severity: P0, op: gt, threshold: 3}
+  - id: db-row-lock-waits
+    metric: db_row_lock_waits_per_second
+    summary: MySQL 行锁等待频繁，持续 5 分钟
+    levels:
+      # 相邻云端采样累计等待次数的增量 / 实际采样间隔，非累计总次数。
+      - {severity: P1, op: ge, threshold: 1, for_seconds: 300}
+  - id: db-deadlocks
+    # 暂无任务引用：保留 >3 次/小时条件，不用死锁速率或行锁等待次数替代。
+    metric: db_deadlocks_last_hour
+    summary: 数据库最近一小时死锁超过 3 次
+    levels:
+      - {severity: P1, op: gt, threshold: 3}
+  - id: db-deadlock-rate
+    metric: db_deadlocks_per_second
+    summary: PostgreSQL 连续 3 分钟出现死锁
+    levels:
+      - {severity: P1, op: gt, threshold: 0, for_seconds: 180}
+  - id: db-slow-queries
+    metric: db_slow_queries_per_second
+    summary: 数据库慢查询速率达到每秒 10 次
+    levels:
+      - {severity: P1, op: ge, threshold: 10}
+  - id: db-cache
+    metric: db_cache_hit_percent
+    summary: 数据库缓存命中率持续低于 95%
+    levels:
+      - {severity: P1, op: lt, threshold: 95, for_seconds: 600}
+  - id: db-long-queries
+    metric: db_long_running_queries
+    summary: PostgreSQL 超过 5 秒的 SQL 持续存在 5 分钟
+    levels:
+      - {severity: P1, op: ge, threshold: 1, for_seconds: 300}

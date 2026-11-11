@@ -1,0 +1,171 @@
+# 微信小程序中转采集。接口见 docs/collection-relay.md，全部账号和任务保持关闭。
+# AppSecret 和业务令牌仅在中转；公开应用标识、目标与计算仍由监控管理。
+accounts:
+  - id: wechat
+    name: 微信小程序
+    provider: wechat
+    enabled: false
+    appid: ''
+    token_type: access_token
+    third_party_authorized: false
+    permission_sets: []
+    relay:
+      url: http://192.0.2.10:18443/v1/monitor/collect
+      token_file: /app/config/relay/wechat.token
+      timeout_seconds: 20
+
+jobs:
+  - id: wechat-api-quota
+    account: wechat
+    kind: api_quota
+    enabled: false
+    interval_seconds: 600
+    max_age_seconds: 1800
+    collection_error_samples: 3
+    rules: [wechat-api-quota-low]
+    options:
+      operation: wechat-api-quota
+      source_max_age_seconds: 1800
+      collector:
+        cgi_paths:
+          - /cgi-bin/message/subscribe/send
+          - /wxa/getwxacodeunlimit
+
+  - id: wechat-charge-packages
+    account: wechat
+    kind: charge_packages
+    enabled: false
+    interval_seconds: 3600
+    max_age_seconds: 10800
+    collection_error_samples: 3
+    rules: [wechat-charge-low, wechat-package-expiry, wechat-package-coverage, wechat-subscription-expiry, wechat-subscription-inactive]
+    options:
+      operation: wechat-charge-packages
+      source_max_age_seconds: 10800
+      collector:
+        max_pages: 100
+        products:
+          - spu_id: CHANGE_ME_SPU_ID
+            resource_name: 业务付费能力
+            product_type: resource_pack
+            unit: CHANGE_ME_UNIT
+            track_expired_package_ids: []
+
+  - id: wechat-annual-review
+    account: wechat
+    kind: annual_review
+    enabled: false
+    interval_seconds: 86400
+    max_age_seconds: 172800
+    collection_error_samples: 1
+    rules: [wechat-qualification-required, wechat-annual-review-required, wechat-annual-review-expiry]
+    # 中转服务须使用已授权的第三方代调用身份及权限集 30。
+    options:
+      operation: wechat-annual-review
+      source_max_age_seconds: 172800
+      collector:
+        method: POST
+
+  - id: wechat-js-errors
+    account: wechat
+    kind: js_errors
+    enabled: false
+    interval_seconds: 3600
+    max_age_seconds: 172800
+    max_gap_seconds: 172800
+    collection_error_samples: 3
+    rules: [wechat-js-errors-high]
+    options:
+      operation: wechat-js-errors
+      source_max_age_seconds: 172800
+      collector:
+        app_version: "0"
+        error_type: "0"
+        day_offset: 1
+        max_pages: 100
+
+  - id: wechat-performance
+    account: wechat
+    kind: performance
+    enabled: false
+    interval_seconds: 3600
+    max_age_seconds: 259200
+    max_gap_seconds: 259200
+    collection_error_samples: 3
+    rules: [wechat-performance-slow]
+    options:
+      operation: wechat-performance
+      source_max_age_seconds: 259200
+      collector:
+        cost_time_types: [1, 2, 3]
+        lookback_days: 8
+        max_data_age_days: 2
+        device: "@_all"
+        networktype: "@_all"
+        scene: "@_all"
+        is_download_code: "@_all"
+
+rules:
+  - id: wechat-api-quota-low
+    metric: api_quota_remaining_percent
+    summary: 微信关键 API 日调用额度不足
+    levels:
+      - {severity: P1, op: le, threshold: 10, for_samples: 2}
+      - {severity: P2, op: le, threshold: 20, for_samples: 2}
+  - id: wechat-charge-low
+    metric: charge_active_remaining_percent
+    summary: 微信付费能力有效资源包余量不足
+    levels:
+      - {severity: P1, op: le, threshold: 10, for_samples: 2}
+      - {severity: P2, op: le, threshold: 20, for_samples: 2}
+  - id: wechat-package-expiry
+    metric: package_expiry_days
+    summary: 微信付费资源包即将到期
+    levels:
+      - {severity: P1, op: le, threshold: 7}
+      - {severity: P2, op: le, threshold: 30}
+  - id: wechat-package-coverage
+    metric: charge_active_package_count
+    summary: 微信配置的付费能力当前没有有效资源包
+    levels:
+      - {severity: P1, op: eq, threshold: 0, for_samples: 2}
+  - id: wechat-subscription-expiry
+    metric: subscription_expiry_days
+    summary: 微信付费能力订阅即将到期
+    levels:
+      - {severity: P1, op: le, threshold: 7}
+      - {severity: P2, op: le, threshold: 30}
+  - id: wechat-subscription-inactive
+    metric: subscription_active
+    summary: 微信配置的付费能力订阅当前未生效
+    levels:
+      - {severity: P1, op: eq, threshold: 0, for_samples: 2}
+  - id: wechat-qualification-required
+    metric: qualification_verified
+    summary: 微信应认证小程序尚未完成资质认证
+    levels:
+      - {severity: P1, op: eq, threshold: 0}
+  - id: wechat-annual-review-required
+    metric: annual_review_required
+    summary: 微信认证需要办理年审
+    levels:
+      - {severity: P2, op: eq, threshold: 1}
+  - id: wechat-annual-review-expiry
+    metric: annual_review_expiry_days
+    summary: 微信认证年审截止日期临近
+    levels:
+      - {severity: P1, op: le, threshold: 7}
+      - {severity: P2, op: le, threshold: 30}
+  - id: wechat-js-errors-high
+    metric: js_error_total_occurrences
+    summary: 微信小程序昨日 JS 错误次数偏高
+    # 示例阈值，需结合当前小程序日流量调整。不是 UV 去重人数。
+    levels:
+      - {severity: P1, op: ge, threshold: 100}
+  - id: wechat-performance-slow
+    metric: performance_cost_milliseconds
+    summary: 微信小程序每日聚合性能耗时偏高
+    # 仅启动总耗时；下载/首屏可另建规则。官方值不是 p95。
+    match: {cost_time_type: 1}
+    levels:
+      - {severity: P2, op: ge, threshold: 3000}

@@ -1,0 +1,17 @@
+{
+  "Version": "1.1",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bss:balance:view",
+        "bss:renewal:view",
+        "bss:bill:view",
+        "rds:instance:list",
+        "ces:metricData:list",
+        "ces:metrics:list",
+        "ecs:cloudServers:list"
+      ]
+    }
+  ]
+}

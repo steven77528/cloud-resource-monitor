@@ -1,0 +1,109 @@
+# 汇付只读请求通过中转签名和验签，子账户筛选、清单、金额计算均由监控处理。
+# 本地证书任务只读监控端公开 X.509 文件，不经过中转，见 docs/collection-relay.md。
+accounts:
+  - id: huifu
+    provider: huifu
+    enabled: false
+    huifu_id: ''
+    relay:
+      url: http://192.0.2.10:18443/v1/monitor/collect
+      token_file: /app/config/relay/huifu.token
+      timeout_seconds: 20
+
+jobs:
+  - id: huifu-balance
+    account: huifu
+    kind: balance
+    enabled: false
+    interval_seconds: 600
+    max_age_seconds: 1800
+    collection_error_samples: 3
+    rules: [huifu-balance-low, huifu-account-abnormal, huifu-query-failed, huifu-signature-failed]
+    options:
+      operation: huifu-balance
+      source_max_age_seconds: 1800
+      collector:
+        amount_unit_confirmed: false
+        currency: CNY
+        source_amount_unit: CHANGE_ME_CONFIRMED_UNIT
+        amount_multiplier: "1"
+        accounts:
+          - acct_id: CHANGE_ME_ACCOUNT_ID
+            acct_type: "01"
+            resource_name: 业务基本户
+
+  - id: huifu-settlements
+    account: huifu
+    kind: settlements
+    enabled: false
+    interval_seconds: 300
+    max_age_seconds: 900
+    collection_error_samples: 3
+    rules: [huifu-settlement-failed, huifu-settlement-returned, huifu-settlement-overdue, huifu-signature-failed]
+    options:
+      operation: huifu-settlements
+      source_max_age_seconds: 900
+      collector:
+        orders_file: /app/config/integrations/huifu-orders.json
+        manifest_max_age_seconds: 900
+        sla_seconds: 1800
+
+  - id: huifu-local-certificate
+    account: huifu
+    kind: local_certificate
+    enabled: false
+    interval_seconds: 86400
+    max_age_seconds: 172800
+    rules: [huifu-certificate-expiry]
+    options:
+      collector:
+        certificate_file: /app/config/integrations/huifu-certificate.pem
+        resource_id: business-api-certificate
+        resource_name: 本地业务 X.509 证书
+
+rules:
+  - id: huifu-balance-low
+    metric: huifu_available_balance
+    summary: 汇付目标子账户可用余额连续不足
+    match: {provider: huifu, currency: CNY}
+    levels:
+      - {severity: P0, op: le, threshold: 100, for_samples: 2}
+      - {severity: P1, op: le, threshold: 500, for_samples: 2}
+  - id: huifu-account-abnormal
+    metric: huifu_account_normal
+    summary: 汇付目标子账户状态异常
+    levels:
+      - {severity: P1, op: eq, threshold: 0, for_samples: 2}
+  - id: huifu-query-failed
+    metric: api_query_success
+    summary: 汇付 API 连续三次查询失败
+    match: {provider: huifu}
+    levels:
+      - {severity: P1, op: eq, threshold: 0, for_samples: 3}
+  - id: huifu-signature-failed
+    metric: api_signature_failed
+    summary: 汇付响应签名验证失败
+    match: {provider: huifu}
+    levels:
+      - {severity: P1, op: eq, threshold: 1}
+  - id: huifu-settlement-failed
+    metric: huifu_settlement_failed
+    summary: 汇付清单内出金交易失败
+    levels:
+      - {severity: P1, op: eq, threshold: 1}
+  - id: huifu-settlement-returned
+    metric: huifu_settlement_returned
+    summary: 汇付清单内出金交易已退汇
+    levels:
+      - {severity: P1, op: eq, threshold: 1}
+  - id: huifu-settlement-overdue
+    metric: huifu_settlement_overdue
+    summary: 汇付清单内出金交易处理超时
+    levels:
+      - {severity: P1, op: eq, threshold: 1}
+  - id: huifu-certificate-expiry
+    metric: huifu_certificate_expiry_days
+    summary: 本地 X.509 证书即将到期（非普通 RSA 密钥）
+    levels:
+      - {severity: P0, op: le, threshold: 7}
+      - {severity: P1, op: le, threshold: 30}

@@ -1,0 +1,68 @@
+# 已确认当前业务使用 OpenAPI；通过可信中转服务查询，监控不配置厂商凭据。
+# OpenAPI 企业认证接入见 docs/asign-api.md。
+# 套餐余量/商业到期使用独立 ledger 账号和台账任务，可与 OpenAPI 一起运行。
+# 台账格式见 asign-package-ledger.example.json；补真实值后另存为以下 ledger_file。
+accounts:
+  - id: asign-openapi
+    provider: asign
+    enabled: false
+    api_mode: openapi
+    app_id: ''
+    relay:
+      url: http://192.0.2.10:18443/v1/monitor/collect
+      token_file: /app/config/relay/asign-openapi.token
+      timeout_seconds: 20
+  - id: asign-ledger
+    provider: asign
+    enabled: false
+    api_mode: ledger
+    # JSON 中 account_id 必须与本账号 id 相同，防止误挂其他合同的套餐文件。
+    ledger_file: /app/config/integrations/asign-package-ledger.json
+
+jobs:
+  - id: asign-company-verification
+    account: asign-openapi
+    kind: company_verification
+    enabled: false
+    interval_seconds: 86400
+    max_age_seconds: 172800
+    rules: [asign-company-unverified]
+    options:
+      operation: asign-company-verification
+      source_max_age_seconds: 172800
+      collector:
+        resource_id: company-main
+        selector:
+          account: CHANGE_ME_OPENAPI_COMPANY_ACCOUNT
+  - id: asign-package-ledger
+    account: asign-ledger
+    kind: package_ledger
+    enabled: false
+    interval_seconds: 3600
+    max_age_seconds: 7200
+    rules: [asign-package-remaining, asign-commercial-expiry]
+    options:
+      package_ids: [signatures-main]
+      source_max_age_seconds: 172800
+
+rules:
+  - id: asign-company-unverified
+    metric: company_verified
+    summary: 爱签 OpenAPI 企业未完成实名认证
+    match: {provider: asign, source: official_api}
+    levels:
+      - {severity: P1, op: eq, threshold: 0, for_seconds: 0}
+  - id: asign-package-remaining
+    metric: package_remaining_percent
+    summary: 爱签套餐台账剩余比例不足（需核对官方后台）
+    match: {provider: asign, source: ledger}
+    levels:
+      - {severity: P1, op: le, threshold: 10, for_seconds: 0}
+      - {severity: P2, op: le, threshold: 20, for_seconds: 0}
+  - id: asign-commercial-expiry
+    metric: commercial_expiry_days
+    summary: 爱签商业套餐台账即将到期（需核对官方后台）
+    match: {provider: asign, source: ledger}
+    levels:
+      - {severity: P1, op: le, threshold: 7, for_seconds: 0}
+      - {severity: P2, op: le, threshold: 30, for_seconds: 0}

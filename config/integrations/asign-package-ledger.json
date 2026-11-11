@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "account_id": "asign-ledger-example",
+  "updated_at": "CHANGE_ME_ACTUAL_UPDATE_TIME_YYYY-MM-DD HH:MM:SS",
+  "packages": [
+    {
+      "id": "signatures-main",
+      "unit": "signatures",
+      "remaining": null,
+      "total": null,
+      "expires_at": "CHANGE_ME_ACTUAL_EXPIRY_YYYY-MM-DD HH:MM:SS"
+    }
+  ]
+}

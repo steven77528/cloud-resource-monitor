@@ -1,0 +1,148 @@
+# 七牛云中转采集模板。全部账号和任务保持关闭；中转服务联调后再启用。
+# 厂商凭据由中转保管；查询目标、换算和分页保留在 collector，见 docs/collection-relay.md。
+accounts:
+  - id: qiniu
+    provider: qiniu
+    enabled: true
+    relay:
+      url: http://192.168.120.58:18443/v1/monitor/collect
+      token_file: /app/config/relay/qiniu.token
+      timeout_seconds: 20
+
+jobs:
+  - id: qiniu-balance
+    account: qiniu
+    kind: balance
+    enabled: true
+    interval_seconds: 1800
+    max_age_seconds: 7200
+    rules: [qiniu-available-low]
+    options:
+      operation: qiniu-balance
+      source_max_age_seconds: 7200
+      collector:
+        available_balance_field: available_balance
+        available_balance_confirmed: true
+
+  - id: qiniu-billing-snapshot
+    account: qiniu
+    kind: billing_snapshot
+    enabled: true
+    interval_seconds: 86400
+    max_age_seconds: 172800
+    rules: [qiniu-budget]
+    options:
+      operation: qiniu-billing-snapshot
+      source_max_age_seconds: 172800
+      collector:
+        monthly_budget: 10000
+        budget_currency: CNY
+
+  - id: qiniu-packages-month
+    account: qiniu
+    kind: resource_packages_month
+    enabled: true
+    interval_seconds: 3600
+    max_age_seconds: 14400
+    rules: [qiniu-package-low]
+    options:
+      operation: qiniu-packages-month
+      source_max_age_seconds: 14400
+      collector:
+        page_size: 200
+        max_pages: 1000
+
+  - id: qiniu-package-expiry
+    account: qiniu
+    kind: resource_packages
+    enabled: false
+    interval_seconds: 86400
+    max_age_seconds: 172800
+    rules: [qiniu-package-expiry, qiniu-package-unavailable]
+    options:
+      operation: qiniu-package-expiry
+      source_max_age_seconds: 172800
+      collector:
+        max_source_age_seconds: 172800
+        packages:
+          - order_hash: CHANGE_ME_ORDER_HASH
+            po_id: 1
+
+  - id: qiniu-kodo-standard
+    account: qiniu
+    kind: kodo_usage
+    enabled: false
+    interval_seconds: 600
+    max_age_seconds: 1800
+    rules: []
+    options:
+      operation: qiniu-kodo-standard
+      source_max_age_seconds: 1800
+      collector:
+        buckets: [CHANGE_ME_BUCKET]
+        max_source_age_seconds: 1800
+
+  - id: qiniu-cdn-usage
+    account: qiniu
+    kind: cdn_usage
+    enabled: false
+    interval_seconds: 600
+    max_age_seconds: 1800
+    rules: []
+    options:
+      operation: qiniu-cdn-usage
+      source_max_age_seconds: 1800
+      collector:
+        domains: [cdn.example.invalid]
+        max_source_age_seconds: 1800
+
+  - id: qiniu-cdn-status
+    account: qiniu
+    kind: cdn_status
+    enabled: false
+    interval_seconds: 300
+    max_age_seconds: 1800
+    rules: [qiniu-cdn-errors]
+    options:
+      operation: qiniu-cdn-status
+      source_max_age_seconds: 1800
+      collector:
+        domains: [cdn.example.invalid]
+        max_source_age_seconds: 1800
+        minimum_requests: 100
+
+rules:
+  - id: qiniu-available-low
+    metric: qiniu_available_balance
+    match: {provider: qiniu, currency: CNY}
+    levels:
+      - {severity: P0, op: le, threshold: 100}
+      - {severity: P1, op: le, threshold: 500}
+  - id: qiniu-budget
+    metric: qiniu_budget_used_percent
+    match: {provider: qiniu}
+    levels:
+      - {severity: P0, op: ge, threshold: 100}
+      - {severity: P1, op: ge, threshold: 80}
+  - id: qiniu-package-low
+    metric: qiniu_package_remaining_percent
+    match: {provider: qiniu}
+    levels:
+      - {severity: P0, op: le, threshold: 10}
+      - {severity: P1, op: le, threshold: 20}
+  - id: qiniu-package-expiry
+    metric: qiniu_package_expiry_days
+    match: {provider: qiniu}
+    levels:
+      - {severity: P0, op: le, threshold: 7}
+      - {severity: P1, op: le, threshold: 30}
+  - id: qiniu-package-unavailable
+    metric: qiniu_package_unavailable
+    match: {provider: qiniu}
+    levels:
+      - {severity: P1, op: eq, threshold: 1}
+  - id: qiniu-cdn-errors
+    metric: qiniu_cdn_5xx_percent
+    match: {provider: qiniu}
+    levels:
+      - {severity: P1, op: gt, threshold: 1, for_seconds: 600}

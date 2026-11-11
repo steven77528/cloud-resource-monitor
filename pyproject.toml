@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cloud-resource-monitor"
+version = "1.0.0"
+description = "Cloud and business platform resource monitoring and tiered alerts"
+requires-python = ">=3.11"
+dependencies = [
+  "PyYAML==6.0.2",
+  "APScheduler==3.11.0",
+  "filelock==3.18.0",
+  "SQLAlchemy==2.0.41",
+  "PyMySQL[rsa]==1.1.2",
+  "psycopg[binary]==3.3.5",
+  "prometheus-client==0.22.1",
+  "qiniu==7.18.0",
+  "cryptography==50.0.1",
+  "requests-toolbelt==1.0.0",
+  "aliyun-python-sdk-core==2.16.0",
+  "huaweicloudsdkbss==3.1.213",
+  "huaweicloudsdkscm==3.1.213",
+  "huaweicloudsdkces==3.1.213",
+  "huaweicloudsdkecs==3.1.213",
+  "huaweicloudsdkrds==3.1.213",
+]
+
+[project.optional-dependencies]
+test = ["pytest==8.3.5", "ruff==0.11.13"]
+
+[project.scripts]
+cloud-monitor = "cloud_monitor.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cloud_monitor*"]
+
+[tool.setuptools.package-data]
+cloud_monitor = ["assets/notification-banners/*.png"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110

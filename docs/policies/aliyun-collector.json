@@ -1,0 +1,56 @@
+{
+  "Version": "1",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ecs:DescribeInstances",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "rds:DescribeDBInstances",
+        "rds:DescribeDBInstanceAttribute",
+        "rds:DescribeDBInstancePerformance",
+        "rds:DescribeDBInstanceNetInfo"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "domain:QueryCommonInfo",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "yundun-cert:ListUserCertificateOrder",
+        "yundun-cert:GetUserCertificateDetail"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bss:DescribeInstances",
+        "bss:DescribeAcccount"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "cms:QueryMetricList",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "dysms:QuerySendStatistics",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "vpc:DescribeEipAddresses",
+      "Resource": "*"
+    }
+  ]
+}

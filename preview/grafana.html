@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>云资源监控 · Grafana 面板预览</title>
+  <style>
+    :root{color-scheme:dark;--bg:#111217;--panel:#181b1f;--edge:#30343b;--text:#e6e8ee;--muted:#a9aeb9;--green:#73bf69;--yellow:#f2cc0c;--orange:#ff9830;--red:#f2495c;--cyan:#5794f2;--teal:#56c6c4}
+    *{box-sizing:border-box;letter-spacing:0}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 "Segoe UI","Microsoft YaHei",sans-serif}button,select,input{font:inherit}button,select{border:1px solid #444953;background:#22252b;color:var(--text);border-radius:3px;min-height:34px;padding:5px 10px}button{cursor:pointer}button:hover{border-color:#9096a2}button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}a{color:#83b5ff;text-decoration:none}a:hover{text-decoration:underline}.topbar{height:49px;border-bottom:1px solid var(--edge);display:flex;align-items:center;gap:20px;padding:0 24px;background:#17191e}.brand{font-weight:650;color:#fafafa;font-size:15px}.brand-mark{display:inline-block;width:12px;height:12px;margin-right:9px;background:var(--orange);transform:rotate(45deg);border-radius:2px}.crumb{color:var(--muted);font-size:12px}.top-meta{margin-left:auto;font-size:12px;color:var(--muted)}main{padding:20px 24px 32px;max-width:1720px;margin:0 auto}.heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.heading h1{font-size:24px;line-height:1.3;margin:0;font-weight:600}.heading p{font-size:12px;color:var(--muted);margin:5px 0 0}.demo-label{color:#f9c87c;background:#29251c;border-left:3px solid var(--orange);padding:8px 12px;font-size:12px;line-height:1.5}.heading-actions{display:flex;gap:12px;align-items:center;font-size:12px}.filters{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:17px 0}.filter{display:grid;gap:5px;min-width:150px}.filter span{font-size:11px;color:var(--muted)}select{max-width:100%;width:100%}.time-filter{margin-left:auto}.time-modes{display:flex;border:1px solid #444953;border-radius:3px;overflow:hidden;height:34px}.time-modes label{padding:6px 11px;cursor:pointer;white-space:nowrap}.time-modes label:has(input:checked){background:#354451;color:#bce7ff}.time-modes input{position:absolute;opacity:0;pointer-events:none}.time-modes label:focus-within{outline:2px solid var(--cyan);outline-offset:-2px}.section-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin:20px 0 9px}.section-title::before{content:"";width:4px;height:14px;background:#707886}.section-title small{font-weight:400;font-size:11px;color:var(--muted);margin-left:auto}.grid{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:10px}.panel{background:var(--panel);border:1px solid var(--edge);border-radius:3px;min-width:0;overflow:hidden}.panel h2{font-size:13px;font-weight:500;line-height:20px;margin:0;padding:10px 12px 7px;min-height:38px;overflow-wrap:anywhere}.panel h2 small{color:var(--muted);font-size:11px;font-weight:400;margin-left:7px}.stat{grid-column:span 4;min-height:111px;padding:10px 14px}.stat h2{padding:0;min-height:24px;color:#c4c8d1}.stat-value{font-size:35px;font-weight:500;line-height:1.35;white-space:nowrap}.stat-value.text{font-size:24px;padding-top:8px}.stat-foot{font-size:11px;color:var(--muted)}.green{color:var(--green)}.red{color:var(--red)}.orange{color:var(--orange)}.yellow{color:var(--yellow)}.muted{color:var(--muted)}.w14{grid-column:span 14}.w10{grid-column:span 10}.w12{grid-column:span 12}.w8{grid-column:span 8}.w24{grid-column:span 24}.chart{height:215px;position:relative;padding:0 10px}.chart canvas{display:block;width:100%;height:100%}.chart-tooltip{position:absolute;display:none;pointer-events:none;white-space:pre;background:#111217;border:1px solid #555d68;border-radius:3px;padding:8px 10px;font-size:11px;line-height:1.65;z-index:2;box-shadow:0 3px 9px #0007;max-width:95%;overflow:hidden}.legend{display:flex;gap:5px 18px;flex-wrap:wrap;padding:4px 13px 12px;min-height:30px;color:#b6bcc7;font-size:11px}.legend span{max-width:100%;overflow-wrap:anywhere}.legend i{width:10px;height:3px;display:inline-block;vertical-align:middle;margin-right:6px}.table-wrap{overflow:auto;max-height:280px}table{width:100%;border-collapse:collapse;text-align:left;font-size:12px;white-space:nowrap}th{background:#22252b;color:#b6bdc8;font-size:11px;font-weight:500;position:sticky;top:0;z-index:1}th,td{padding:8px 12px;border-bottom:1px solid #292d34}td{color:#d2d6df}tbody tr:hover{background:#20262c}tbody tr:last-child td{border-bottom:0}.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px}.badge:before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor}.nowrap{white-space:nowrap}.empty{height:130px;display:grid;place-content:center;text-align:center;font-size:13px;color:#a2a8b3}.quota-list{padding:7px 14px 13px;min-height:215px}.quota-row{margin-bottom:17px}.quota-label{display:flex;justify-content:space-between;gap:12px;font-size:12px;margin-bottom:6px}.quota-label span:first-child{min-width:0;overflow-wrap:anywhere}.quota-track{height:13px;background:#262a30}.quota-track span{display:block;height:100%;transition:width .25s}.footer{display:flex;justify-content:space-between;gap:16px;color:#858d9a;font-size:11px;margin-top:20px}.foot-link{color:#b1c8ea}.health-line{display:flex;gap:20px;flex-wrap:wrap;padding:5px 12px 12px;font-size:11px;color:var(--muted)}.health-line b{font-weight:500;color:var(--text)}.compact .chart{height:188px}.status-table{height:260px}.value-unit{font-size:14px;margin-left:5px;color:var(--muted)}
+    .chart-tooltip{white-space:pre-wrap;width:max-content;overflow-wrap:anywhere}
+    @media(max-width:1050px){.stat{grid-column:span 8}.w14,.w10,.w12{grid-column:span 12}.w8{grid-column:span 12}.filter{min-width:140px;flex:1}.time-filter{margin-left:0;flex:0 0 auto}.heading-actions{flex-direction:column;align-items:flex-end}.heading h1{font-size:22px}.top-meta{display:none}}
+    @media(max-width:680px){main{padding:15px 12px 24px}.topbar{padding:0 12px;gap:14px}.crumb{font-size:11px}.heading{align-items:flex-start}.heading h1{font-size:22px}.heading-actions a{display:none}.heading-actions button{min-width:54px}.demo-label{font-size:11px}.filters{gap:10px}.filter{min-width:calc(50% - 10px);max-width:calc(50% - 5px)}.time-filter{min-width:100%;max-width:100%}.time-modes label{flex:1;text-align:center}.stat{grid-column:span 12;min-height:106px;padding:10px 12px}.stat-value{font-size:31px}.stat-value.text{font-size:22px}.w14,.w10,.w12,.w8{grid-column:span 24}.section-title{font-size:13px}.section-title small{font-size:10px}.chart{height:205px}.footer{flex-direction:column;gap:5px}.legend{font-size:10px}.status-table{height:auto;max-height:260px}}
+  </style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"></span>Grafana</div><div class="crumb">Dashboards &nbsp; / &nbsp; 云资源监控</div><div class="top-meta">Prometheus · cloud-resource-monitor</div></header>
+<main>
+  <div class="heading"><div><h1>云资源监控</h1><p>费用 · 有效期 · 资源容量 · 数据库性能</p></div><div class="heading-actions"><a href="../grafana/cloud-resource-monitor.json" download>下载面板 JSON</a><button id="refresh" title="刷新演示视图">刷新</button></div></div>
+  <div class="demo-label" role="note">面板预览 · 以下均为模拟数据，未连接生产环境</div>
+  <div class="filters">
+    <label class="filter"><span>云厂商</span><select id="provider"><option value="all">全部云厂商</option><option value="aliyun">阿里云</option><option value="huawei">华为云</option></select></label>
+    <label class="filter"><span>账号</span><select id="account"></select></label>
+    <label class="filter"><span>资源</span><select id="resource"></select></label>
+    <div class="filter time-filter"><span>时间范围</span><div class="time-modes" role="group" aria-label="时间范围"><label><input type="radio" name="range" value="6">6 小时</label><label><input type="radio" name="range" value="24" checked>24 小时</label><label><input type="radio" name="range" value="168">7 天</label><label><input type="radio" name="range" value="200">200 小时</label></div></div>
+  </div>
+  <div class="grid" id="stats"></div>
+  <div class="section-title">告警与采集健康<small>当前状态</small></div>
+  <div class="grid">
+    <section class="panel w14"><h2>当前活跃告警</h2><div class="table-wrap status-table" id="alerts"></div></section>
+    <section class="panel w10"><h2>任务状态 <small>账号范围</small></h2><div class="table-wrap status-table" id="jobs"></div></section>
+  </div>
+  <div class="section-title">账号余额与资源有效期<small>人民币 / 自然日</small></div>
+  <div class="grid">
+    <section class="panel w12"><h2>账号余额趋势 <small>CNY</small></h2><div class="chart"><canvas id="balance" aria-label="账号余额趋势" role="img"></canvas></div><div class="legend" id="balance-legend"></div></section>
+    <section class="panel w12"><h2>到期资源 <small>按剩余天数排序</small></h2><div class="table-wrap" id="expiry"></div></section>
+  </div>
+  <div class="section-title">资源包与容量<small>云端最新有效采样</small></div>
+  <div class="grid">
+    <section class="panel w12"><h2>资源包剩余额度</h2><div class="quota-list" id="packages"></div></section>
+    <section class="panel w12"><h2>资源包使用率趋势</h2><div class="chart"><canvas id="package" aria-label="资源包使用率趋势" role="img"></canvas></div><div class="legend" id="package-legend"></div></section>
+    <section class="panel w8 compact"><h2>存储空间使用率</h2><div class="chart"><canvas id="storage" aria-label="存储空间使用率" role="img"></canvas></div><div class="legend" id="storage-legend"></div></section>
+    <section class="panel w8 compact"><h2>QPS 配额使用率</h2><div class="chart"><canvas id="qps" aria-label="QPS 配额使用率" role="img"></canvas></div><div class="legend" id="qps-legend"></div></section>
+    <section class="panel w8 compact"><h2>带宽使用率</h2><div class="chart"><canvas id="bandwidth" aria-label="带宽使用率" role="img"></canvas></div><div class="legend" id="bandwidth-legend"></div></section>
+  </div>
+  <div class="section-title">短信<small>上一完整自然日</small></div>
+  <div class="grid"><section class="panel w12 compact"><h2>短信日发送量较前 7 日均值增幅</h2><div class="chart"><canvas id="sms" aria-label="短信发送量增幅" role="img"></canvas></div><div class="legend" id="sms-legend"></div></section><section class="panel w12 compact"><h2>短信回执成功率</h2><div class="chart"><canvas id="sms-success" aria-label="短信回执成功率" role="img"></canvas></div><div class="legend" id="sms-success-legend"></div></section></div>
+  <div class="section-title">RDS 性能<small>已启用任务</small></div>
+  <div class="grid" id="rds-panels"></div>
+  <section id="network-section">
+    <div class="section-title">ECS 与 RDS 网络速率<small>bit/s</small></div>
+    <div class="grid">
+      <section class="panel w12"><h2>ECS 内网入出速率 <small>阿里云 · 1 分钟</small></h2><div class="chart"><canvas id="network-ecs-intranet" aria-label="ECS 内网入出速率，单位 bit/s" role="img"></canvas></div><div class="legend" id="network-ecs-intranet-legend"></div></section>
+      <section class="panel w12"><h2>ECS 总网卡入出速率 <small>华为云 · 公网与内网 · 5 分钟</small></h2><div class="chart"><canvas id="network-ecs-all" aria-label="ECS 总网卡入出速率，公网与内网，单位 bit/s" role="img"></canvas></div><div class="legend" id="network-ecs-all-legend"></div></section>
+      <section class="panel w24"><h2>RDS 总网络入出吞吐 <small>1 分钟 · 华为云延迟约 5–10 分钟</small></h2><div class="chart"><canvas id="network-rds-all" aria-label="RDS 总网络入出吞吐，单位 bit/s" role="img"></canvas></div><div class="legend" id="network-rds-all-legend"></div></section>
+    </div>
+  </section>
+  <div class="section-title">全部指标<small>当前有效值 / 原始单位</small></div>
+  <section class="panel"><h2>当前有效指标明细</h2><div class="table-wrap" id="metrics"></div></section>
+  <div class="footer"><span>演示数据时间：2026-09-10 16:00:00 CST · <span id="updated">视图已就绪</span></span><span>面板 JSON：Grafana 10+ · 历史窗口 200h</span></div>
+</main>
+<script>
+"use strict";
+const COLORS=["#73bf69","#5794f2","#f2cc0c","#56c6c4","#ff9830","#f2495c"];
+const accounts=[{id:"aliyun-demo-prod",name:"阿里云 / 生产演示",provider:"aliyun",balance:18762},{id:"huawei-demo-ops",name:"华为云 / 运维演示",provider:"huawei",balance:6428}];
+const resources=[
+ {id:"demo-api",name:"API 服务 ECS",account:"aliyun-demo-prod",product:"ECS",expiry:8.2,network:{scope:"intranet",in:126000000,out:68000000}},
+ {id:"demo-cert",name:"api.example.test",account:"aliyun-demo-prod",product:"SSL",expiry:26.8},
+ {id:"demo-mysql",name:"业务 MySQL",account:"aliyun-demo-prod",product:"RDS",expiry:61.4,db:true,network:{scope:"all",in:42000000,out:72000000}},
+ {id:"demo-pg",name:"分析 PostgreSQL",account:"aliyun-demo-prod",product:"RDS",expiry:145.3,db:true},
+ {id:"demo-oss",name:"OSS 生产存储包",account:"aliyun-demo-prod",product:"OSS",expiry:96.7,remaining:18.6,storage:82.4,qps:38.5,bandwidth:55.6},
+ {id:"demo-sms",name:"业务通知短信",account:"aliyun-demo-prod",product:"SMS",expiry:128.0,remaining:62.5,sms:23.8},
+ {id:"demo-obs",name:"OBS 归档存储包",account:"huawei-demo-ops",product:"OBS",expiry:182.2,remaining:68.2,storage:41.5,qps:22.4,bandwidth:31.3},
+ {id:"demo-elb",name:"生产入口 ELB",account:"huawei-demo-ops",product:"ELB",expiry:4.6},
+ {id:"demo-worker",name:"计算服务 ECS",account:"huawei-demo-ops",product:"ECS",expiry:86.5,network:{scope:"all",in:183000000,out:117000000}},
+ {id:"demo-hw-mysql",name:"运维 MySQL",account:"huawei-demo-ops",product:"RDS",expiry:126.5,network:{scope:"all",in:27000000,out:39000000}},
+ {id:"demo-hw-pg",name:"报表 PostgreSQL",account:"huawei-demo-ops",product:"RDS",expiry:148.2,network:{scope:"all",in:16000000,out:24000000}}
+];
+const alerts=[{severity:"P0",id:"demo-mysql",metric:"复制延迟",value:"4.2 s"},{severity:"P1",id:"demo-oss",metric:"存储空间使用率",value:"82.4%"},{severity:"P0",id:"demo-elb",metric:"资源有效期",value:"4.6 天"},{severity:"P1",id:"demo-oss",metric:"资源包剩余额度",value:"18.6%"},{severity:"P1",id:"demo-api",metric:"资源有效期",value:"8.2 天"},{severity:"P1",id:"demo-cert",metric:"证书有效期",value:"26.8 天"},{severity:"P2",id:"huawei-certificates",account:"huawei-demo-ops",resourceName:"华为云证书采集任务",metric:"采集失败",value:"错误"}];
+const jobs=[{account:"aliyun-demo-prod",name:"aliyun-balance",kind:"余额",state:"正常",age:"34 秒",tone:"green"},{account:"aliyun-demo-prod",name:"aliyun-ecs-expiry",kind:"有效期",state:"正常",age:"2 分钟",tone:"green"},{account:"aliyun-demo-prod",name:"aliyun-rds-performance",kind:"RDS 性能",state:"正常",age:"18 秒",tone:"green"},{account:"aliyun-demo-prod",name:"aliyun-sms-statistics",kind:"短信",state:"正常",age:"1 小时",tone:"green"},{account:"huawei-demo-ops",name:"huawei-balance",kind:"余额",state:"正常",age:"42 秒",tone:"green"},{account:"huawei-demo-ops",name:"huawei-certificates",kind:"证书",state:"错误",age:"9 分钟",tone:"red"},{account:"huawei-demo-ops",name:"huawei-rds-expiry",kind:"有效期",state:"无数据",age:"3 分钟",tone:"orange"}];
+const rdsSpecs=[
+ ["cpu","CPU 使用率","db_cpu_percent","%",100,80,[46.4,28.2]],
+ ["memory","内存使用率","db_memory_percent","%",100,85,[72.8,53.6]],
+ ["disk","磁盘空间使用率","db_disk_used_percent","%",100,80,[66.7,38.5]],
+ ["connections","连接数使用率","db_connections_used_percent","%",100,80,[42.5,24.7]],
+ ["replication","复制延迟","db_replication_delay_seconds","s",6,3,[4.2,null]],
+ ["rowlock","MySQL 行锁等待速率","db_row_lock_waits_per_second","/s",2,1,[0.32,null]],
+ ["deadlock","PostgreSQL 死锁速率","db_deadlocks_per_second","/s",0.1,null,[null,0]],
+ ["hourly-deadlock","MySQL 最近 1 小时死锁 / 预留","db_deadlocks_last_hour","次",null,null,[null,null]],
+ ["slow","慢查询速率","db_slow_queries_per_second","/s",15,10,[2.6,null]],
+ ["cache","缓存命中率","db_cache_hit_percent","%",100,95,[null,99.2]],
+ ["longsql","PostgreSQL 超过 5 秒的 SQL","db_long_running_queries","条",3,1,[null,0]]
+];
+const provider=document.getElementById("provider"),account=document.getElementById("account"),resource=document.getElementById("resource");
+const rdsPanels=document.getElementById("rds-panels");
+rdsSpecs.forEach(([id,title])=>{const section=document.createElement("section");section.className="panel w12 compact";const h=document.createElement("h2");h.textContent=title;const wrap=document.createElement("div");wrap.className="chart";const canvas=document.createElement("canvas");canvas.id=id;canvas.setAttribute("role","img");canvas.setAttribute("aria-label",title);wrap.append(canvas);const legend=document.createElement("div");legend.className="legend";legend.id=id+"-legend";section.append(h,wrap,legend);rdsPanels.append(section)});
+function availableAccounts(){return accounts.filter(a=>provider.value==="all"||a.provider===provider.value)}
+function selectedAccounts(){return availableAccounts().filter(a=>account.value==="all"||a.id===account.value)}
+function availableResources(){const ids=new Set(selectedAccounts().map(a=>a.id));return resources.filter(r=>ids.has(r.account))}
+function selectedResources(){return availableResources().filter(r=>resource.value==="all"||r.id===resource.value)}
+function options(select,items,allLabel){const old=select.value;select.replaceChildren(new Option(allLabel,"all"),...items.map(i=>new Option(i.name,i.id)));select.value=items.some(i=>i.id===old)?old:"all"}
+function updateAccounts(){options(account,availableAccounts(),"全部账号");updateResources()}
+function updateResources(){options(resource,availableResources(),"全部资源");render()}
+function esc(value){return String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]))}
+function table(target,head,rows){document.getElementById(target).innerHTML=rows.length?`<table><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(v=>`<td>${v}</td>`).join("")}</tr>`).join("")}</tbody></table>`:'<div class="empty">无数据</div>'}
+function series(label,value,index,mode="wave"){const hours=Number(document.querySelector('input[name="range"]:checked').value);const points=Array.from({length:73},(_,i)=>{const p=i/72;if(mode==="balance")return value+(1-p)*hours*10+(Math.floor((1-p)*8)*45);if(mode==="growth")return value+Math.sin(Math.floor(p*hours/24)*1.8+index)*16;const wave=value===0?0:(Math.sin(p*hours*.42+index*1.7)*.13+Math.sin(p*hours*1.67+index)*.055);return Math.max(0,value*(mode==="quota"?.86+.14*p:1)+value*wave)});points[points.length-1]=value;return {label,points,color:COLORS[index%COLORS.length]}}
+let charts=[];
+function formatRate(value){const scale=value>=1e9?1e9:value>=1e6?1e6:value>=1e3?1e3:1;return (value/scale).toLocaleString("zh-CN",{maximumFractionDigits:1})+" "+(scale===1e9?"Gbps":scale===1e6?"Mbps":scale===1e3?"Kbps":"bit/s")}
+function drawChart(id,data,{unit="%",max=null,threshold=null,thresholds=[]}={}){
+ const canvas=document.getElementById(id),rect=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1,width=Math.max(1,rect.width),height=Math.max(1,rect.height);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);const ctx=canvas.getContext("2d");ctx.scale(dpr,dpr);ctx.clearRect(0,0,width,height);ctx.font='11px "Segoe UI","Microsoft YaHei",sans-serif';ctx.fillStyle="#a9aeb9";
+ canvas.dataset.unit=unit;canvas.dataset.seriesCount=String(data.length);const legend=document.getElementById(id+"-legend");legend.replaceChildren();if(!data.length){ctx.textAlign="center";ctx.fillText("无数据",width/2,height/2);canvas.onpointermove=null;canvas.onpointerleave=null;return}
+ const flat=data.flatMap(d=>d.points),min=Math.min(0,...flat),observedMax=Math.max(...flat),upper=max===null?Math.max(observedMax*1.12,1):Math.max(max,observedMax*1.04),left=unit==="CNY"?55:unit==="bit/s"?70:42,right=12,top=12,bottom=29,plotW=width-left-right,plotH=height-top-bottom;
+ function y(value){return top+(upper-value)/(upper-min)*plotH}function format(value){if(unit==="bit/s")return formatRate(value);if(unit==="CNY")return value>=1000?(value/1000).toFixed(1)+"k":value.toFixed(0);return (upper<1?value.toFixed(2):value.toFixed(0))+(unit==="%"?"%":"")}
+ ctx.textAlign="right";for(let i=0;i<=4;i++){const value=min+(upper-min)*i/4,py=y(value);ctx.strokeStyle="#2c3037";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(left,py);ctx.lineTo(width-right,py);ctx.stroke();ctx.fillStyle="#929aa8";ctx.fillText(format(value),left-8,py+4)}
+ const hours=Number(document.querySelector('input[name="range"]:checked').value),end=new Date("2026-09-10T08:00:00Z").getTime();ctx.textAlign="center";for(let i=0;i<=4;i++){const date=new Date(end-hours*3600000*(1-i/4));const label=hours<=24?date.toLocaleTimeString("zh-CN",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit",hour12:false}):date.toLocaleDateString("zh-CN",{timeZone:"Asia/Shanghai",month:"2-digit",day:"2-digit"});ctx.fillText(label,left+plotW*i/4,height-8)}
+ if(threshold!==null&&threshold<=upper){ctx.strokeStyle="#a17837";ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(left,y(threshold));ctx.lineTo(width-right,y(threshold));ctx.stroke();ctx.setLineDash([])}
+ thresholds.forEach(([value,color])=>{if(value>upper)return;ctx.strokeStyle=color;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(left,y(value));ctx.lineTo(width-right,y(value));ctx.stroke();ctx.setLineDash([])});
+ data.forEach(item=>{ctx.strokeStyle=item.color;ctx.lineWidth=1.7;ctx.beginPath();item.points.forEach((value,i)=>{const px=left+plotW*i/(item.points.length-1);if(i===0)ctx.moveTo(px,y(value));else ctx.lineTo(px,y(value))});ctx.stroke();const span=document.createElement("span"),swatch=document.createElement("i");swatch.style.background=item.color;const value=unit==="bit/s"?formatRate(item.points.at(-1)):item.points.at(-1).toLocaleString("zh-CN",{maximumFractionDigits:unit==="/s"?2:1})+(unit==="CNY"?" 元":unit);span.append(swatch,document.createTextNode(item.label+"  "+value));legend.append(span)});
+ let tip=canvas.parentElement.querySelector(".chart-tooltip");if(!tip){tip=document.createElement("div");tip.className="chart-tooltip";canvas.parentElement.append(tip)}
+ canvas.onpointermove=event=>{const r=canvas.getBoundingClientRect(),localX=event.clientX-r.left,index=Math.max(0,Math.min(72,Math.round((localX-left)/plotW*72))),date=new Date(end-hours*3600000*(1-index/72));tip.textContent=date.toLocaleString("zh-CN",{timeZone:"Asia/Shanghai",hour12:false})+"\n"+data.map(s=>s.label+": "+(unit==="bit/s"?formatRate(s.points[index]):s.points[index].toFixed(unit==="/s"?2:1)+" "+unit)).join("\n");tip.style.display="block";tip.style.left=Math.max(0,Math.min(localX+15,width-tip.offsetWidth-4))+"px";tip.style.top="9px"};canvas.onpointerleave=()=>tip.style.display="none";
+}
+function chart(id,data,config){charts.push([id,data,config]);drawChart(id,data,config)}
+function render(){
+ charts=[];const list=selectedResources(),ids=new Set(list.map(r=>r.id)),accountList=selectedAccounts(),accountIds=new Set(accountList.map(a=>a.id)),active=alerts.filter(a=>ids.has(a.id)||(resource.value==="all"&&accountIds.has(a.account))),selectedJobs=jobs.filter(j=>accountIds.has(j.account)),minExpiry=list.length?Math.min(...list.map(r=>r.expiry)):null;
+ const stats=[["P0 活跃告警",active.filter(a=>a.severity==="P0").length,"red","当前资源范围"],["P1 活跃告警",active.filter(a=>a.severity==="P1").length,"orange","当前资源范围"],["P2 活跃告警",active.filter(a=>a.severity==="P2").length,"yellow","当前资源范围"],["异常 / 待采集任务",selectedJobs.filter(j=>j.state!=="正常").length,"orange","账号范围"],["最近到期 / 天",minExpiry===null?"无数据":minExpiry.toFixed(1),minExpiry!==null&&minExpiry<=7?"red":"orange","当前资源范围"],["采集调度器 / 全局","运行中","green","心跳 18 秒前"]];
+ document.getElementById("stats").innerHTML=stats.map(([title,value,tone,foot])=>`<section class="panel stat"><h2>${title}</h2><div class="stat-value ${typeof value==="string"&&isNaN(Number(value))?"text":""} ${value===0?"green":tone}">${value}</div><div class="stat-foot">${foot}</div></section>`).join("");
+ table("alerts",["级别","资源","指标","当前值"],active.map(a=>{const r=resources.find(r=>r.id===a.id);return [`<span class="badge ${a.severity==="P0"?"red":a.severity==="P1"?"orange":"yellow"}">${a.severity}</span>`,esc(r?r.name:a.resourceName),esc(a.metric),esc(a.value)]}));
+ table("jobs",["任务","状态","最近采集"],selectedJobs.map(j=>[esc(j.name),`<span class="badge ${j.tone}">${j.state}</span>`,esc(j.age)]));
+ table("expiry",["资源","产品","剩余天数","账号"],[...list].sort((a,b)=>a.expiry-b.expiry).map(r=>[esc(r.name),esc(r.product),`<span class="${r.expiry<=7?"red":r.expiry<=30?"orange":"green"}">${r.expiry.toFixed(1)} 天</span>`,esc(r.account)]));
+ const balances=resource.value==="all"?accountList:[];chart("balance",balances.map((a,i)=>series(a.id,a.balance,i,"balance")),{unit:"CNY"});
+ const packages=list.filter(r=>r.remaining!==undefined);document.getElementById("packages").innerHTML=packages.length?packages.map((r,i)=>`<div class="quota-row"><div class="quota-label"><span>${esc(r.name)}</span><span style="color:${r.remaining<20?"#ff9830":"#73bf69"}">${r.remaining}%</span></div><div class="quota-track"><span style="width:${r.remaining}%;background:${r.remaining<20?"#ff9830":COLORS[i%COLORS.length]}"></span></div></div>`).join(""):'<div class="empty">无数据</div>';
+ chart("package",packages.map((r,i)=>series(r.name,100-r.remaining,i,"quota")),{max:100});
+ ["storage","qps","bandwidth"].forEach(id=>chart(id,list.filter(r=>r[id]!==undefined).map((r,i)=>series(r.name,r[id],i)),{max:100}));
+ chart("sms",list.filter(r=>r.sms!==undefined).map((r,i)=>series(r.name,r.sms,i,"growth")),{unit:"%"});
+ chart("sms-success",[],{unit:"%",max:100});
+ rdsSpecs.forEach(([id,title,metric,unit,max,limit,values])=>{const data=["demo-mysql","demo-pg"].flatMap((rid,i)=>ids.has(rid)&&values[i]!==null?[series(resources.find(r=>r.id===rid).name,values[i],i)]:[]);chart(id,data,{unit,max,threshold:limit})});
+ [["network-ecs-intranet","ECS","intranet"],["network-ecs-all","ECS","all"],["network-rds-all","RDS","all"]].forEach(([id,product,scope])=>{const matches=list.filter(r=>r.product===product&&r.network?.scope===scope);const data=matches.flatMap((r,i)=>["in","out"].map((direction,d)=>{const provider=accounts.find(a=>a.id===r.account).provider;return series(provider+" / "+r.name+" / network_"+direction+"_bps",r.network[direction],i*2+d)}));const levels=product==="ECS"?[100000000,300000000,800000000]:[50000000,100000000,200000000];chart(id,data,{unit:"bit/s",thresholds:levels.map((value,i)=>[value,["#5794f2","#ff9830","#f2495c"][i]])})});
+ const metricRows=[];balances.forEach(a=>metricRows.push([esc(a.id),"账号余额","balance",a.balance.toLocaleString(),"CNY"]));list.forEach(r=>{metricRows.push([esc(r.account),esc(r.name),"expiry_days",r.expiry.toFixed(1),"days"]);if(r.remaining!==undefined)metricRows.push([esc(r.account),esc(r.name),"package_remaining_percent",r.remaining.toFixed(1),"%"]);["storage","qps","bandwidth"].forEach(k=>{if(r[k]!==undefined)metricRows.push([esc(r.account),esc(r.name),k==="qps"?"qps_ratio":k+"_used_percent",(k==="qps"?r[k]/100:r[k]).toFixed(k==="qps"?3:1),k==="qps"?"ratio":"%"])});if(r.sms!==undefined)metricRows.push([esc(r.account),esc(r.name),"sms_growth_percent",r.sms.toFixed(1),"%"]);if(r.db)rdsSpecs.forEach(([,title,metric,unit,,,values])=>{const value=values[r.id==="demo-mysql"?0:1];if(value!==null)metricRows.push([esc(r.account),esc(r.name),metric,String(value),unit==="/s"?"count/s":unit==="s"?"seconds":unit==="条"?"count":unit])})});
+ list.filter(r=>r.network).forEach(r=>["in","out"].forEach(direction=>metricRows.push([esc(r.account),esc(r.name),"network_"+direction+"_bps",String(r.network[direction]),"bit/s"])));
+ table("metrics",["账号","资源","指标","原始值","单位"],metricRows);
+ document.querySelectorAll(".chart-tooltip").forEach(t=>t.style.display="none");
+}
+provider.addEventListener("change",updateAccounts);account.addEventListener("change",updateResources);resource.addEventListener("change",render);document.querySelectorAll('input[name="range"]').forEach(r=>r.addEventListener("change",render));document.getElementById("refresh").addEventListener("click",()=>{render();document.getElementById("updated").textContent="视图刷新于 "+new Date().toLocaleTimeString("zh-CN",{hour12:false})});let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>charts.forEach(args=>drawChart(...args)),100)});updateAccounts();
+</script>
+</body>
+</html>

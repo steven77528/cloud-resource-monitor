@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.tmp/
+data/
+.env
+.deploy-backups/
+config/config.yaml
+config/notifications/notifications.yaml
+config/credentials/*
+!config/credentials/.gitkeep
+config/relay/*
+!config/relay/.gitkeep
